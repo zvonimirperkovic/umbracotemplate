@@ -1,0 +1,154 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using ClientDependency.Core.Mvc;
+@{
+    Layout = null;
+    var home = Model.Content.Site();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @if (home.HasValue("googleTagManager"))
+    {
+        <script>
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', '@(home.GetPropertyValue<string>("googleTagManager"))');
+        </script>
+    }
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="@(Model.Content.GetPropertyValue<string>("pageDescription"))">
+    <title>
+        @(Model.Content.HasValue("pageTitle") ? string.Format("{0} | {1}", Model.Content.GetPropertyValue<string>("pageTitle"), home.GetPropertyValue<string>("siteTitle")) : string.Format("{0} | {1}", Model.Content.Name, home.GetPropertyValue<string>("siteTitle")))
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    @{
+        Html.RequiresCss("~/css/main.css");
+        Html.RequiresJs("~/scripts/main.js");
+    }
+    @Html.RenderCssHere()
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <meta name="msapplication-square70x70logo" content="/smalltile.png" />
+    <meta name="msapplication-square150x150logo" content="/mediumtile.png" />
+    <meta name="msapplication-wide310x150logo" content="/widetile.png" />
+    <meta name="msapplication-square310x310logo" content="/largetile.png" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="&#64;COMPANYHASTTAG" />
+    <meta name="twitter:title" content="@(Model.Content.GetPropertyValue<string>("pageTitle"))">
+    <meta name="twitter:description" content="@(Model.Content.GetPropertyValue<string>("pageTitle"))">
+    <meta name="twitter:image:src" content="Make Image and direct path">
+    <!-- Open Graph General (Facebook & Pinterest) -->
+    <meta property="og:url" content="FULL URL">
+    <meta property="og:title" content="@(Model.Content.GetPropertyValue<string>("pageTitle"))">
+    <meta property="og:description" content="@(Model.Content.GetPropertyValue<string>("pageDescription"))">
+    <meta property="og:site_name" content="@(home.GetPropertyValue<string>("siteTitle"))">
+    <meta property="og:image" content="Make Image and direct path">
+    <meta property="og:type" content="website">
+
+    @RenderSection("head", false)
+    @Html.Raw(home.GetPropertyValue<string>("headerScripts"))
+</head>
+<body class="@Model.Content.Name">
+    @if (home.HasValue("googleTagManager"))
+    {
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=@(home.GetPropertyValue<string>("googleTagManager"))"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+    }
+    <a href="#main-content" class="sr-only">Skip to Content</a>
+    <header>
+        <div class="utility">
+            @{ Html.RenderPartial("UtilityNavigation", home); }
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">Company Logo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                @{ Html.RenderPartial("MainNavigation", home); }
+            </div>
+        </nav>
+    </header>
+    <main id="main-content">
+        @RenderBody()
+    </main>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div itemscope itemtype="http://schema.org/LocalBusiness">
+                        <a itemprop="url" href="@(home.GetPropertyValue<string>("companyURL"))">
+                            <div itemprop="name"><strong>@(home.GetPropertyValue<string>("companyName"))</strong></div>
+                        </a>
+                        <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                            <span itemprop="streetAddress">@(home.GetPropertyValue<string>("address"))</span>,<br>
+                            <span itemprop="addressLocality">@(home.GetPropertyValue<string>("city"))</span>,<br>
+                            <span itemprop="addressRegion">@(home.GetPropertyValue<string>("state"))</span> -
+                            <span itemprop="postalCode">@(home.GetPropertyValue<string>("zipCode"))</span><br>
+                        </div>
+                        <strong>Tel: </strong><span itemprop="telephone"><a href="tel:12345">@(home.GetPropertyValue<string>("phone"))</a></span><br>
+                    </div>
+                    <div class="copyright">
+                        <p> &copy; @DateTime.Now.Year @(home.GetPropertyValue<string>("siteTitle")). All rights reserved. </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                    <div class="social">
+                        @if (home.HasValue("facebook"))
+                        {
+                            <a href="@(home.GetPropertyValue<string>("facebook"))">Facebook</a>
+                        }
+                        @if (home.HasValue("twitter"))
+                        {
+                            <a href="@(home.GetPropertyValue<string>("Twitter"))">Twitter</a>
+                        }
+                        @if (home.HasValue("linkedIn"))
+                        {
+                            <a href="@(home.GetPropertyValue<string>("linkedIn"))">LinkedIn</a>
+                        }
+                        @if (home.HasValue("youtube"))
+                        {
+                            <a href="@(home.GetPropertyValue<string>("youtube"))">Youtube</a>
+                        }
+                        @if (home.HasValue("instagram"))
+                        {
+                            <a href="@(home.GetPropertyValue<string>("instagram"))">Instagram</a>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    @{ Html.RenderPartial("BottomNavigation", home); }
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    @Html.RenderJsHere()
+    @Html.Raw(home.GetPropertyValue<string>("footerScripts"))
+</body>
+</html>

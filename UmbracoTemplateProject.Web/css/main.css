@@ -1,0 +1,94 @@
+﻿@charset "UTF-8";
+/**
+ * CONTENTS............You’re reading it!
+ * NORMALIZE...........If using a framework like Bootstrap, say so; otherwise, include minified Normalize code
+ * FONT-FACE...........Font family names
+ * MIXINS..............SASS mixins
+ * ELEMENTS............Basic global tag styles, framework trumps, etc.
+ * LAYOUT..............Template layout/structure
+ * HOMEPAGE............Styles for homepage layout
+ * CONTENT.............Styles for shared & inside content
+        * For very complicated sites, you may want to consider adding
+        * subsections if the CSS for a section gets very long. Ex:
+        * MAIN PRODUCTS PAGE
+        * CATEGORY/SUBCATEGORY PAGE
+        * PRODUCT DETAIL PAGE
+ * ADD OTHER MAJOR SECTIONS AS NECESSARY - BLOG, SHOPPING CART, ETC.
+ * RESPONSIVE..........Responsive styles, mobile first
+ */
+/*------------------------------------*    #NORMALIZE
+\*------------------------------------*/
+/* normalize code goes here if not using a framework - suggested version: https://necolas.github.io/normalize.css/ */
+/*------------------------------------*    #VARIABLES
+\*------------------------------------*/
+/*------------------------------------*    #MIXINS
+\*------------------------------------*/
+/* use this space to write your LESS mixins, whatever you find useful when writing SASS. Some suggestions: */
+/* flexbox mixins that set up row & column layouts with necessary vendor prefixes
+   consider adding more mixins for other properties like flex-wrap: wrap (nowrap is default, you shouldn't need a
+   specific class to declare that) */
+/* NOTE: The Web Compiler config has an option for autoPrefix that will create all necessary prefixes based on the value you assign it.
+   Suggested parameter value: ">1%, last 2 versions" */
+/* I also like to declare my color variables here. Use color names (red, blue, gray) or use names (primary-color, secondary-color, background-color) */
+/*------------------------------------*    #ELEMENTS
+\*------------------------------------*/
+/* Use this space to write global styles for basic tags (body, h1, a, etc.) that will then be overridden as necessary in later
+   areas of the CSS. I also recommend using this section to write custom changes to framework elements that will be used globally.
+   For example, if using Bootstrap, this would be a good place to write custom rules for the .btn-primary class, to style the
+   primary buttons to match the site styles */
+/* Global elements */
+html {
+  font-size: 62.5%;
+  /* Or whatever you want your rem size to be */ }
+
+body {
+  color: #000;
+  /* or whatever your global text color is */
+  font-size: 1.6rem; }
+
+a {
+  transition: 0.3s ease all; }
+
+::selection {
+  background-color: #aebe27;
+  color: #fff; }
+
+::-moz-selection {
+  background-color: #aebe27;
+  color: #fff; }
+
+/* Framework overrides */
+.btn {
+  font-size: 1.6rem;
+  transition: 0.3s ease all; }
+
+.div-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  width: 100%; }
+
+form {
+  display: inline-block; }
+
+/*------------------------------------*    #Billboard
+\*------------------------------------*/
+.billboard {
+  position: relative;
+  padding: 20rem 0;
+  background-color: #CCC;
+  background-size: cover;
+  background-position: center center; }
+
+/*------------------------------------*    #HOMEPAGE
+\*------------------------------------*/
+/* Use this space to write styles that will only apply to the homepage or that will be overridden for inside pages.
+   Ex: homepage billboard, larger logo on homepage, etc. */
+/*------------------------------------*    #CONTENT
+\*------------------------------------*/
+/* Use this space to write inside page styles - anything that doesn't belong on the homepage or in other major sections.
+   If using subsections in the Table of Contents at the top, be sure to add #SUBSECTION headers inside comments to allow
+   for easy finding. */
+/*------------------------------------*    #OTHER MAJOR SECTIONS
+\*------------------------------------*/
+/* some random coment */
+

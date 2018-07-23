@@ -1,0 +1,27 @@
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    var children = Model.Children().Where(x => x.IsVisible());
+    var currentPageId = UmbracoContext.Current.PageId;
+}
+
+@if (children != null & children.Any())
+{
+    <ul class="navbar-nav">
+        @foreach (var childPage in children)
+        {
+            <li class="@(childPage.Id == currentPageId ? "selected" : null) nav-item">
+                <a href="@childPage.Url" class="nav-link">
+                    @if (childPage.HasValue("linkText"))
+                    {
+                        @(childPage.GetPropertyValue<string>("linkText"))
+
+                    }
+                    else
+                    {
+                        @childPage.Name
+                    }
+                </a>
+            </li>
+        }
+    </ul>
+}

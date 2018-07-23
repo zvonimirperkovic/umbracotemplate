@@ -1,0 +1,21 @@
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{  var selection = Model.GetPropertyValue<List<IPublishedContent>>("utilityNavigation"); }
+
+<ul class="list-unstyled" id="util-nav">
+    @foreach (var item in selection)
+    {
+        <li class="d-inline">
+            <a href="@item.Url">@item.Name</a>
+        </li>
+    }
+    <li class="d-inline">
+        <form method="get" id="cse-search-box" action="/searchresults">
+                <label class="sr-only" for="usterms">Search</label>
+                <span id="UltimateSearchInput1" class="search">
+                    <input name="query" type="search" placeholder="type keyword(s) here" id="usterms" class="searchBox" onkeydown="EnableEnter((window.event) ? window.event : arguments[0], 'ctl08_ctl00')" autocomplete="off" />
+                    <button id="searchsubmit" type="submit">Search</button>
+                </span>
+        </form>
+    </li>
+</ul>

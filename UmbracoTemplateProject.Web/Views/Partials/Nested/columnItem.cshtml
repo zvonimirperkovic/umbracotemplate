@@ -1,0 +1,10 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    Layout = null;
+}
+
+<div class="col">
+    <h2>@Html.Raw(Model.GetPropertyValue("headline"))</h2>
+    @Html.Raw(Model.GetPropertyValue("description"))
+</div>

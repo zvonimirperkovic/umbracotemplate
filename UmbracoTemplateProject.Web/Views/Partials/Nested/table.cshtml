@@ -1,0 +1,91 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web;
+@using Umbraco.Core.Models;
+@using ClientDependency.Core.Mvc
+@using TableEditor.Models
+
+<section class="tables div-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-12">
+                @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("headline")))
+                {
+
+                    <h2 class="text-center">@(Model.GetPropertyValue<string>("headline"))</h2>
+
+                }
+                @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("description")))
+                {
+
+                   @Html.Raw(Model.GetPropertyValue<string>("description"))
+
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                @{
+                    var table = Model.GetPropertyValue<TableEditorModel>("tableInfo");
+                    var rowIndex = 0;
+                }
+
+                <div class="table-editor-wrapper">
+                    <table class="@table.TableStyle table table-striped">
+                        @{
+                            if (table.UseFirstRowAsHeader)
+                            {
+                                <thead>
+                                    @foreach (var column in table.Cells.FirstOrDefault())
+                                    {
+                                    <th>@Html.Raw(column.Value)</th>
+                                    }
+                                </thead>
+                                rowIndex++;
+                            }
+
+                            <tbody>
+                                @foreach (var row in table.Cells)
+                                {
+                                    if (table.UseFirstRowAsHeader && row == table.Cells.FirstOrDefault())
+                                    {
+                                        continue;
+                                    }
+
+                                    if (table.UseLastRowAsFooter && row == table.Cells.LastOrDefault() && table.Cells.Count() > 1)
+                                    {
+                                        continue;
+                                    }
+
+                                    <tr class="@table.RowStylesSelected.ElementAtOrDefault(rowIndex)">
+                                        @{
+                                            var columnIndex = 0;
+
+                                            foreach (var column in row)
+                                            {
+                                                <td class="@table.ColumnStylesSelected.ElementAtOrDefault(columnIndex)">@Html.Raw(column.Value)</td>
+                                                columnIndex++;
+                                            }
+
+                                            rowIndex++;
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                            if (table.UseLastRowAsFooter && table.Cells.Count() > 1)
+                            {
+                                var columnIndex = 0;
+                                <tfoot>
+                                    @foreach (var column in table.Cells.LastOrDefault())
+                                    {
+                                        <td class="@table.ColumnStylesSelected.ElementAtOrDefault(columnIndex)">@Html.Raw(column.Value)</td>
+                                        columnIndex++;
+                                    }
+                                </tfoot>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

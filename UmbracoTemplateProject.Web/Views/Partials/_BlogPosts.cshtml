@@ -1,0 +1,47 @@
+﻿@model List<UmbracoTemplateProject.Web.Models.BlogSnippetViewModel>
+
+@if (Model.Any())
+{
+    foreach (var post in Model)
+    {
+        if (!string.IsNullOrEmpty(post.ImageUrl))
+        {
+            
+                <div class="col-md-4">
+                    <div class="in-wrap">
+                        <a href="@post.Url">
+                            <img data-src="@(post.ImageUrl)" class="img-fluid lazyload" alt="@post.Title" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-8 text-left">
+                    <h5 class="blog-date">@post.PublishedDate.ToString("MMMM d, yyyy")  <!--<a href="#">@post.Author</a>--></h5>
+                    <h3><a href="@post.Url">@post.Title</a></h3>
+                    <p>
+                        @Html.Raw(post.Excerpt)<br />
+                        @foreach (var tag in post.Tags)
+                        {
+                            <a href="/about-us/current-news/tags/@tag" class="tags">@tag</a>
+                        }
+                    </p>
+                </div>
+        
+        }
+        else
+        {
+        
+                <div class="col-md-12 text-left">
+                    <h5 class="blog-date">@post.PublishedDate.ToString("MMMM d, yyyy")  <!--<a href="#">@post.Author</a>--></h5>
+                    <h3><a href="@post.Url">@post.Title</a></h3>
+                    <p>
+                        @Html.Raw(post.Excerpt)<br />
+                        @foreach (var tag in post.Tags)
+                        {
+                            <a href="/about-us/current-news/tags/@tag" class="tags">@tag</a>
+                        }
+                    </p>
+                </div>
+          
+        }
+    }
+}

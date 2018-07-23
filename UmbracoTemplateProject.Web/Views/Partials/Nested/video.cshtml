@@ -1,0 +1,63 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using ClientDependency.Core.Mvc
+
+@{
+    var direction = Model.GetPropertyValue<string>("videoOrder");
+    bool isFull = direction == "Video Full";
+    bool isLeft = direction == "Video Left";
+}
+<section class="video div-section">
+    <div class="container">
+        <div class="row">
+            @if (isFull)
+            {
+                <div class="col">
+                    <div class="video-wrap">
+                        @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("videoHeadline")))
+                        {
+                            <h2 class="video-row__h2">@(Model.GetPropertyValue<string>("videoHeadline"))</h2>
+                        }
+                        @if (Model.HasValue("description"))
+                        {
+                            <div>@Html.Raw(Model.GetPropertyValue<IHtmlString>("description"))</div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("videoId")))
+                        {
+                            <div class="embed-responsive embed-responsive-16by9 pull-right">
+                                <iframe class="embed-responsive-item" height="315" src="https://www.youtube.com/embed/@(Model.GetPropertyValue<string>("videoId"))" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col @(isLeft ? "order-1" : "order-2")">
+                    <div class="video-wrap">
+                        @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("videoId")))
+                        {
+                            <div class="embed-responsive embed-responsive-16by9 pull-right">
+                                <iframe class="embed-responsive-item" height="315" src="https://www.youtube.com/embed/@(Model.GetPropertyValue<string>("videoId"))" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        }
+                    </div>
+                </div>
+                if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("videoHeadline")) || Model.HasValue("description"))
+                {
+                    <div class="col @(isLeft ? "order-2" : "order-1")">
+                        <div class="video-wrap">
+                            @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("videoHeadline")))
+                            {
+                                <h2 class="video-row__h2">@(Model.GetPropertyValue<string>("videoHeadline"))</h2>
+                            }
+                            @if (Model.HasValue("description"))
+                            {
+                                <div>@Html.Raw(Model.GetPropertyValue<IHtmlString>("description"))</div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>

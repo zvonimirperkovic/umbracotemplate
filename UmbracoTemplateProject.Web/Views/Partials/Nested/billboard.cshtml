@@ -1,0 +1,58 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web;
+@using Umbraco.Core.Models;
+
+@{
+    var image = Model.GetPropertyValue<IPublishedContent>("image");
+}
+@if (image == null)
+            {
+    <section class="billboard">
+        <div class="text-wrap text-center">
+            @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("headline")))
+            {
+                <h2 class="text-center">@(Model.GetPropertyValue<string>("headline"))</h2>
+            }
+            @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("subheadline")))
+            {
+                <h3 class="text-center">@(Model.GetPropertyValue<string>("subheadline"))</h3>
+            }
+            @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("description")))
+            {
+                <p class="text-center">@Html.Raw(Model.GetPropertyValue<string>("description"))</p>
+            }
+            @if (Model.HasValue("link"))
+            {
+
+                <a href="@(Model.GetPropertyValue<IPublishedContent>("link").Url)" class="btn btn-primary">@Html.Raw(Model.GetPropertyValue<string>("linkText"))</a>
+
+            }
+        </div>
+    </section>
+
+}
+else
+{
+    <section class="billboard" style="background-image:url(@image.Url?quality=90);">
+        <div class="text-wrap text-center">
+            @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("headline")))
+            {
+                <h2 class="text-center">@(Model.GetPropertyValue<string>("headline"))</h2>
+            }
+            @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("subheadline")))
+            {
+                <h3 class="text-center">@(Model.GetPropertyValue<string>("subheadline"))</h3>
+            }
+            @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("description")))
+            {
+                <p class="text-center">@Html.Raw(Model.GetPropertyValue<string>("description"))</p>
+            }
+            @if (Model.HasValue("link"))
+            {
+
+                <a href="@(Model.GetPropertyValue<IPublishedContent>("link").Url)" class="btn btn-primary">@Html.Raw(Model.GetPropertyValue<string>("linkText"))</a>
+
+            }
+        </div>
+    </section>
+}

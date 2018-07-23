@@ -1,0 +1,12 @@
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{  var selection = Model.GetPropertyValue<List<IPublishedContent>>("bottomNavigation"); }
+
+<ul class="list-unstyled" id="util-nav">
+    @foreach (var item in selection)
+    {
+        <li>
+            <a href="@item.Url">@item.Name</a>
+        </li>
+    }
+</ul>

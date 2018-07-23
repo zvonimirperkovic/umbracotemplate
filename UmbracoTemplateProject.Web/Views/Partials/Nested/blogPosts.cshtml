@@ -1,0 +1,22 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web;
+@using Umbraco.Core.Models;
+
+@{
+    var numberOfPosts = Model.HasValue("numberOfPostsToDisplay") ? Model.GetPropertyValue<int>("numberOfPostsToDisplay") : 2;
+    var category = Model.HasValue("category") ? Model.GetPropertyValue<string>("category") : null;
+}
+
+<section class="blog div-section">
+    @if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("headline")))
+    {
+
+        <h2 class="text-center">@(Model.GetPropertyValue<string>("headline"))</h2>
+
+    }
+    <div class="container">
+        <div class="row justify-content-center">
+            @Html.Action("Feed", "Blog", new { numberToDisplay = numberOfPosts, category = category })
+        </div>
+    </div>
+</section>

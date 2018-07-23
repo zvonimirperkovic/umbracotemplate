@@ -1,0 +1,19 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web
+
+@{
+    Layout = "Master.cshtml";
+}
+
+<h1 class="text-center">@(Model.GetPropertyValue<string>("pageH1"))</h1>
+
+@if (Model.HasValue("contentModules"))
+{
+    var components = Model.GetPropertyValue<IEnumerable<IPublishedContent>>("contentModules");
+        foreach (var content in components.ToContentSet())
+        {
+            @Html.Partial(string.Format("~/Views/Partials/Nested/{0}.cshtml", content.DocumentTypeAlias), content)
+        }
+}
+
+

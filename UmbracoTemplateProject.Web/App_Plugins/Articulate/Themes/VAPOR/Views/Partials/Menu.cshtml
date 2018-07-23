@@ -1,0 +1,53 @@
+@using Articulate
+@using Articulate.Models
+@inherits UmbracoViewPage<Articulate.Models.IMasterModel>
+
+@{
+    var categories = Umbraco.GetAllCategories(Model);
+    var recent = Umbraco.GetRecentPosts(Model, 5);
+    var tags = Umbraco.GetPostTagCollection(Model);
+}
+
+<nav class="menu" role="nav">
+    <div>
+        @Html.ThemedPartial(Model, "SearchBox")
+
+        @if (categories != null && categories.Any())
+        {
+            <h4>Categories</h4>
+            <div class="">
+                <ul id="categorylist" class="list-unstyled">
+                    @foreach (var c in categories)
+                    {
+                        <li><a href="@Url.ArticulateCategoryUrl(Model, c)" class="link-large" title="Category: @c">@c</a></li>
+                    }
+                </ul>
+            </div>
+        }
+
+        @if (tags != null && tags.Any())
+        {
+            <h4 class="mt-4">Popular tags</h4>
+            <div class="">
+                @Html.TagCloud(tags, 5, 50)
+            </div>
+        }
+        @if (recent != null && recent.Any())
+        {
+            <h4 class="mt-4">Recent posts</h4>
+            <div class="">
+                <ul class="recentPosts list-unstyled mb-0" id="recentPosts">
+                    @foreach (var post in recent)
+                    {
+                        <li>
+                            <a href="@post.Url" class="link-large">@post.Name</a>
+                            <div>
+                                <a data-disqus-identifier="@post.GetContentKey()" class="comment-count" href="@post.Url#disqus_thread"></a>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</nav>

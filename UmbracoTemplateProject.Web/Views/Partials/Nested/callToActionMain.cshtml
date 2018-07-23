@@ -1,0 +1,69 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+<section class="cta div-section">
+    <div class="container">
+        @if (Model.HasValue("cTAs"))
+        {
+            if (!string.IsNullOrEmpty(Model.GetPropertyValue<string>("headline")))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="text-center secondary-features__h2">@(Model.GetPropertyValue<string>("headline"))</h2>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                @if (Model.HasValue("cTAs"))
+                {
+                    var components = Model.GetPropertyValue<IEnumerable<IPublishedContent>>("cTAs");
+
+                    foreach (var content in components.ToContentSet())
+                    {
+                        <div class="col">
+                            @if (content.GetPropertyValue<IPublishedContent>("image") != null)
+                        {
+                            if (content.HasValue("link"))
+                            {
+                                    <a href="@(content.GetPropertyValue<IPublishedContent>("link").Url)">
+                                        <img data-src="@(content.GetPropertyValue<IPublishedContent>("image").Url)" class="lazyload img-fluid" alt="@(content.GetPropertyValue<string>("heading"))" />
+                                    </a>
+                                }
+                                else
+                                {
+                                    <img data-src="@(content.GetPropertyValue<IPublishedContent>("image").Url)" class="lazyload img-fluid" alt="@(content.GetPropertyValue<string>("heading"))" />
+                                }
+                            }
+                            else
+                            {
+
+                            }
+                            @if (content.HasValue("ctaHeadline"))
+                        {
+                                <h3>
+                                    @if (content.HasValue("link"))
+                                    {
+                                        <a href="@(content.GetPropertyValue<IPublishedContent>("link").Url)">@(content.GetPropertyValue<string>("ctaHeadline"))</a>
+                                    }
+                                    else
+                                    {
+                                        @(content.GetPropertyValue<string>("ctaHeadline"))
+                                    }
+                                </h3>
+                            }
+                            @if (content.HasValue("subheadline"))
+                        {
+                                <h4>@(content.GetPropertyValue<string>("subheadline"))</h4>
+                            }
+                            @Html.Raw((content.GetPropertyValue<string>("description")))
+                            @if (content.HasValue("link"))
+                        {
+
+                                <a href="@(content.GetPropertyValue<IPublishedContent>("link").Url)" class="btn btn-primary">Read More</a>
+
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+</section>
